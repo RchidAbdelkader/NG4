@@ -1,0 +1,21 @@
+
+
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Angular 4</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+      <p> </p>
+      <li *ngFor="let item of menu;" >
+
+        <a [routerLink]="item.link"  >
+
+          {{item.name}}</a>
+
+      </li>
+
+    </ul>
+
+
+  </nav>

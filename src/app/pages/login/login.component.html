@@ -1,0 +1,11 @@
+<div class="login">
+  <input type="text" [(ngModel)]="login.login" placeholder="login">
+  <input type="password" [(ngModel)]="login.password" placeholder="Mot de passe">
+  <br>
+  <div class="center">
+    {{error}}
+  </div>
+  <br>
+  <input class="btn-success" type="submit" (click)="connect()" value="Connecter">
+</div>
+<div class="shadow"></div>

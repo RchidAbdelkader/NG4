@@ -1,0 +1,45 @@
+<div class="col-md-12">
+  <div class="col-md-6">
+    <button  class="btn btn-default btn-sm" (click)="add()">
+      <span class="glyphicon "></span> Nouveau
+    </button>
+  </div>
+  <div class="col-md-6">
+
+    <div style="float: right" class="col-sm-4">
+      <input type="text" [(ngModel)]='listFilter' class="form-control"
+             placeholder="filtrer par nom"/>
+    </div>
+  </div>
+
+</div>
+
+<div class="col-md-12">
+<table class="table str">
+  <thead>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of userList | user:listFilter">
+
+    <td  >{{user.firstName}}</td>
+    <td  >{{user.lastName}}</td>
+    <td appTeamDirective [team]="user.team"
+    >{{user.team}}</td>
+
+    <td  width="5%">
+      <a class="btn btn-default btn-sm" (click)="update(user.id)">
+        <span class="glyphicon glyphicon-cog"></span>
+      </a>
+
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>

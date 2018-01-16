@@ -1,0 +1,9 @@
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+.outlet{
+  margin: 61px 35px 0 264px;
+   width: 100%;
+
+}

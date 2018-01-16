@@ -1,0 +1,87 @@
+<div class="panel-body">
+  Contact :
+
+  <a class="btn btn-default btn-sm" (click)="addContact()">
+    <span class="glyphicon glyphicon-plus"></span>
+  </a>
+</div>
+<div class="panel-body"  [formGroup]="parentForm">
+
+
+  <div formArrayName="contacts" *ngFor="let contact of   parentForm.get('contacts').controls; let i=index">
+
+    <div class="panel panel-primary">
+      <div class="panel-body">
+
+
+        <div [formGroupName]="i">
+
+          <div class="col-md-6">
+            <div class="form-group"
+                 [ngClass]="{'has-error':isValidContactField('mobile',i)}">
+              <label class="col-md-2 control-label"
+                     for="mobile{{i}}">Tél</label>
+
+              <div class="col-md-8">
+                <input class="form-control"
+                       id="mobile{{i}}"
+                       type="text"
+                       placeholder="Téléphone"
+                       formControlName="mobile"/>
+                <span class="help-block" *ngIf="isValidContactField('mobile',i)">
+                         <span *ngIf="contact.get('mobile').errors.pattern">
+                          num téléphone invalide
+                        </span>
+                        <span *ngIf="contact.get('mobile').errors.required">
+                          Champ obligatoire
+                        </span>
+
+                        <span *ngIf="contact.get('mobile').errors.minlength">
+                          4 chiffre min
+                        </span>
+                        <span *ngIf="contact.get('mobile').errors.maxlength">
+                          12 chiffre max
+                        </span>
+
+            </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group"
+                 [ngClass]="{'has-error':isValidContactField('mail',i)}">
+              <label class="col-md-2 control-label"
+                     for="mail{{i}}">Email</label>
+
+              <div class="col-md-8">
+                <input class="form-control"
+                       id="mail{{i}}"
+                       type="text"
+                       placeholder="Mail"
+                       formControlName="mail"/>
+                <span class="help-block" *ngIf="isValidContactField('mail',i)">
+                <span *ngIf="contact.get('mail').errors.required">
+                  Champ obligatoire
+                </span>
+                <span *ngIf="contact.get('mail').errors.pattern">
+                  Email invalide
+                </span>
+
+            </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <a class="btn btn-default btn-sm" (click)="removeContact(i)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
