@@ -1,249 +1,79 @@
 <div class="panel panel-primary">
   <div class="panel-body">
 
-    <form [formGroup]="form"
-
-          *ngIf="user" class="form-horizontal"
+    <form [formGroup]="form" *ngIf="user" class="form-horizontal"
           novalidate>
       <fieldset>
+
         <!--------------------------------------------------------------------------------->
-        <div class="form-group"
-             [ngClass]="{'has-error':isValidUserField('firstName')}">
-          <label class="col-md-2 control-label"
-                 for="firstNameId">Nom</label>
+        <!--------------------------------------------------------------------------------->
 
-          <div class="col-md-8">
+        <div formGroupName="contacts">
+          <div class="panel-body">
+            Contact :
 
-            <input class="form-control"
-                   formControlName="firstName"
-
-                   id="firstNameId"
-                   type="text"
-                   placeholder="Nom"
-                   />
-            <span class="help-block" *ngIf="isValidUserField('firstName')">
-                 <span *ngIf="form.get('firstName').errors.required">
-                               Champ obligatoire
-                 </span>
-            </span>
+            <a class="btn btn-default btn-sm" (click)="addContact()">
+              <span class="glyphicon glyphicon-plus"></span>
+            </a>
           </div>
-        </div>
-
-        <!--------------------------------------------------------------------------------->
-
-         <div class="form-group"
-             [ngClass]="{'has-error':isValidUserField('lastName')}">
-          <label class="col-md-2 control-label"
-                 for="lastName">Prénom</label>
-
-          <div class="col-md-8">
-            <input class="form-control"
-                   id="lastName"
-                   type="text"
-                   placeholder="Prénom"
-                   formControlName="lastName"/>
-            <span class="help-block" *ngIf="isValidUserField('lastName')">
-                <span *ngIf="form.get('lastName').errors.required">
-                                Champ obligatoire
-                </span>
-
-            </span>
-          </div>
-        </div>
-
-        <!--------------------------------------------------------------------------------->
-        <!--------------------------------------------------------------------------------->
+          <div class="panel-body" formArrayName="array">
 
 
-        <div class="form-group"
-             [ngClass]="{'has-error':isValidUserField('team')}">
-          <label class="col-md-2 control-label"
-                 for="team">Equipe</label>
+            <div *ngFor="let contact of form.get('contacts').get('array').controls; let i=index">
 
-          <div class="col-md-8">
+              <div class="panel panel-primary">
+                <div class="panel-body">
 
-            <select class="form-control" id="team" formControlName="team">
-              <option *ngFor="let team of teams" [value]="team"> {{team}}</option>
+                  <div [formGroup]="array.at(i)">
 
-            </select>
-            <span class="help-block" *ngIf="isValidUserField('team')">
-                <span *ngIf="form.get('team').errors.required">
-                                Champ obligatoire
-                </span>
+                    <div class="col-md-6">
+                      <div class="form-group"
+                           [ngClass]="{'has-error':isValidContactField('mobile',i)}">
+                        <label class="col-md-2 control-label"
+                        >Tél</label>
 
-            </span>
-          </div>
-        </div>
+                        <div class="col-md-8">
+                          <input class="form-control"
+                                 type="text"
+                                 placeholder="Téléphone"
+                                 formControlName="mobile"/>
 
-        <!--------------------------------------------------------------------------------->
-        <!--------------------------------------------------------------------------------->
-
-        <div class="form-group"
-             [ngClass]="{'has-error':isValidUserField('photo')}">
-          <label class="col-md-2 control-label"
-                 for="photo">Photo</label>
-
-          <div class="col-md-8">
-            <input class="form-control"
-                   id="photo"
-                   type="file"
-                   accept="image/*"
-                   placeholder="photo"
-                   (change)="readData($event)"
-                   formControlName="photo"/>
-            <span class="help-block" *ngIf="isValidUserField('photo')">
-                <span *ngIf="form.get('photo').errors.required">
-                                Champ obligatoire
-                </span>
-
-            </span>
-          </div>
-        </div>
-
-        <!--------------------------------------------------------------------------------->
-        <!--------------------------------------------------------------------------------->
-
-
-        <div class="form-group"
-             [ngClass]="{'has-error':isValidUserField('login')}">
-          <label class="col-md-2 control-label"
-                 for="login">Login</label>
-
-          <div class="col-md-8">
-            <input class="form-control"
-                   id="login"
-                   type="text"
-
-                   placeholder="login"
-
-                   formControlName="login"/>
-            <span class="help-block" *ngIf="isValidUserField('login')">
-                <span *ngIf="form.get('login').errors.required">
-                                Champ obligatoire
-                </span>
-
-            </span>
-          </div>
-        </div>
-        <!--------------------------------------------------------------------------------->
-        <!--------------------------------------------------------------------------------->
-
-
-        <div class="form-group"
-             [ngClass]="{'has-error':isValidUserField('plainPassword')}">
-          <label class="col-md-2 control-label"
-                 for="login">Mot de passe</label>
-
-          <div class="col-md-8">
-            <input class="form-control"
-                   id="plainPassword"
-                   type="password"
-
-                   placeholder="Mot de passe"
-
-                   formControlName="plainPassword"/>
-            <span class="help-block" *ngIf="isValidUserField('plainPassword')">
-                <span *ngIf="form.get('plainPassword').errors.required">
-                                Champ obligatoire
-                </span>
-
-            </span>
-          </div>
-        </div>
-        <!--------------------------------------------------------------------------------->
-        <!--------------------------------------------------------------------------------->
-
-
-        <div class="panel-body">
-          Contact :
-
-          <a class="btn btn-default btn-sm" (click)="addContact()">
-            <span class="glyphicon glyphicon-plus"></span>
-          </a>
-        </div>
-        <div class="panel-body"   >
-
-
-          <div formArrayName="contacts" *ngFor="let contact of form.get('contacts').controls; let i=index">
-
-            <div class="panel panel-primary">
-              <div class="panel-body">
-
-
-                <div [formGroupName]="i">
-
-                  <div class="col-md-6">
-                    <div class="form-group"
-                         [ngClass]="{'has-error':isValidContactField('mobile',i)}">
-                      <label class="col-md-2 control-label"
-                             for="mobile{{i}}">Tél</label>
-
-                      <div class="col-md-8">
-                        <input class="form-control"
-                               id="mobile{{i}}"
-                               type="text"
-                               placeholder="Téléphone"
-                               formControlName="mobile"/>
-                        <span class="help-block" *ngIf="isValidContactField('mobile',i)">
-                         <span *ngIf="contact.get('mobile').errors.pattern">
-                          num téléphone invalide
-                        </span>
-                        <span *ngIf="contact.get('mobile').errors.required">
-                          Champ obligatoire
-                        </span>
-
-                        <span *ngIf="contact.get('mobile').errors.minlength">
-                          4 chiffre min
-                        </span>
-                        <span *ngIf="contact.get('mobile').errors.maxlength">
-                          12 chiffre max
-                        </span>
-
-            </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="form-group"
-                         [ngClass]="{'has-error':isValidContactField('mail',i)}">
-                      <label class="col-md-2 control-label"
-                             for="mail{{i}}">Email</label>
+                    <div class="col-md-5">
+                      <div class="form-group"
+                           [ngClass]="{'has-error':isValidContactField('mail',i)}">
+                        <label class="col-md-2 control-label"
+                        >Email</label>
 
-                      <div class="col-md-8">
-                        <input class="form-control"
-                               id="mail{{i}}"
-                               type="text"
-                               placeholder="Mail"
-                               formControlName="mail"/>
-                        <span class="help-block" *ngIf="isValidContactField('mail',i)">
-                <span *ngIf="contact.get('mail').errors.required">
-                  Champ obligatoire
-                </span>
-                <span *ngIf="contact.get('mail').errors.pattern">
-                  Email invalide
-                </span>
+                        <div class="col-md-8">
+                          <input class="form-control"
 
-            </span>
+                                 type="text"
+                                 placeholder="Mail"
+                                 formControlName="mail"/>
+
+                        </div>
                       </div>
                     </div>
+                    <div class="col-md-1">
+                      <a class="btn btn-default btn-sm" (click)="removeContact(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                      </a>
+                    </div>
                   </div>
-                  <div class="col-md-1">
-                    <a class="btn btn-default btn-sm" (click)="removeContact(i)">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                  </div>
+
+
                 </div>
 
-
               </div>
-
             </div>
+
           </div>
 
-        </div>
 
-
-        <!--------------------------------------------------------------------------------->
+        </div>    <!--------------------------------------------------------------------------------->
         <!--------------------------------------------------------------------------------->
 
       </fieldset>
@@ -254,9 +84,9 @@
       </button>
 
     </form>
+
   </div>
 </div>
 <p>
-  <!--{{form.value|json}}-->
 </p>
 

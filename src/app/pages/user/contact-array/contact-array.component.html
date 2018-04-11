@@ -8,7 +8,7 @@
 <div class="panel-body"  [formGroup]="parentForm">
 
 
-  <div formArrayName="contacts" *ngFor="let contact of   parentForm.get('contacts').controls; let i=index">
+  <div formArrayName="contacts" *ngFor="let contact of   parentForm.get('array').controls; let i=index">
 
     <div class="panel panel-primary">
       <div class="panel-body">

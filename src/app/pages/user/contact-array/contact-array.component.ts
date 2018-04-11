@@ -24,7 +24,7 @@ export class ContactArrayComponent implements OnInit {
   }
 
   isValidContactField(name, i) {
-    let field = (<FormArray>this.parentForm.get('contacts')).at(i).get(name);
+    let field = (<FormArray>this.parentForm.get('array')).at(i).get(name);
     return ((field.touched ||
       field.dirty) &&
       field.errors);

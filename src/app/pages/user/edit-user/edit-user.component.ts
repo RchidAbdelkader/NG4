@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../service/user-service";
@@ -31,8 +31,8 @@ export class EditUserComponent implements OnInit {
 
             this.user = data;
             this.form = this.formUser.getFormUser(this.user);
-            for(let i=0;i<this.user.contacts.length;i++){
-              this.contacts.push(this.formUser.getformContact(this.user.contacts[i]))
+            for (let i = 0; i < this.user.contacts.length; i++) {
+              this.array.push(this.formUser.getformContact(this.user.contacts[i]))
             }
 
           });
@@ -42,11 +42,14 @@ export class EditUserComponent implements OnInit {
     );
   }
 
-  get contacts(): FormArray {
-    return <FormArray> this.form.get("contacts");
+  get array(): FormArray {
+    return <FormArray> this.form.get("contacts").get('array');
   }
 
 
+  get contacts(): FormGroup {
+    return <FormGroup> this.form.get("contacts");
+  }
 
   readData(input: any) {
     let f: File = input.target.files[0];
@@ -61,11 +64,11 @@ export class EditUserComponent implements OnInit {
 
   isValidContactField(name, i) {
 
-    console.log(name);
-    let field = (<FormArray>this.form.get('contacts')).at(i).get(name);
+    /*console.log(name);
+    let field = (<FormArray>this.form.get('array')).at(i).get(name);
     return ((field.touched ||
       field.dirty) &&
-      field.errors);
+      field.errors);*/
   }
 
   isValidUserField(name) {
@@ -76,22 +79,25 @@ export class EditUserComponent implements OnInit {
 
 
   public addContact() {
-      //if(this.form.get('contacts').valid)
-      (<FormArray>this.form.get('contacts')).push(this.formUser.getformContact())
-    }
+    //if(this.form.get('contacts').valid)
+    (<FormArray>this.form.get('contacts').get('array')).push(this.formUser.getformContact());
+    console.log(this.form.value);
+
+  }
 
   public removeContact(i) {
-    (<FormArray>this.form.get('contacts')).removeAt(i)
+    (<FormArray>this.form.get('contacts').get('array')).removeAt(i)
   }
 
 
   public SubmitJsonFormBuilder() {
 
+    console.log(this.form.value);
     let form = this.form.value;
-    form.photo = this.image;
-    this.userService.postFormJsonUser(form).subscribe(data => {
-      this.router.navigate(["user"]);
-    });
+    //form.photo = this.image;
+    /* this.userService.postFormJsonUser(form).subscribe(data => {
+       this.router.navigate(["user"]);
+     });*/
   }
 
   ngOnInit() {
