@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormUser} from "./form-user";
-import {FormArray, FormGroup} from "@angular/forms";
-import {UserService} from "../service/user-service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {FormUser} from './form-user';
+import {FormArray, FormGroup} from '@angular/forms';
+import {UserService} from '../service/user-service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-client',
@@ -12,9 +12,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class AddUserComponent implements OnInit {
 
   form: FormGroup;
-  image: any = "";
-  teams = ["php", "java"];
+  image: any = '';
+  teams = ['php', 'java'];
   user: any;
+  imageFile: any;
 
   constructor(private formAdd: FormUser,
               private userService: UserService,
@@ -24,18 +25,19 @@ export class AddUserComponent implements OnInit {
   }
 
   get contacts(): FormArray {
-    return <FormArray> this.form.get("contacts");
+    return <FormArray> this.form.get('contacts');
   }
 
 
   ngOnInit() {
-     this.form = this.formAdd.getFormUser();
+    this.form = this.formAdd.getFormUser();
 
   }
 
 
   readData(input: any) {
     let f: File = input.target.files[0];
+    this.imageFile = f;
     let reader: FileReader = new FileReader();
     reader.readAsDataURL(f);
     reader.onload = () => {
@@ -53,25 +55,25 @@ export class AddUserComponent implements OnInit {
 
 
   public addContact() {
-      //if(this.form.get('contacts').valid)
-      (<FormArray>this.form.get('contacts')).push(this.formAdd.getformContact())
-    }
+    //if(this.form.get('contacts').valid)
+    (<FormArray>this.form.get('contacts')).push(this.formAdd.getformContact());
+  }
 
 
   public removeContact(i) {
-    (<FormArray>this.form.get('contacts')).removeAt(i)
+    (<FormArray>this.form.get('contacts')).removeAt(i);
   }
 
 
   public submitFormData() {
     let formData = new FormData();
-    if (this.image != "")
-      formData.append("photo", this.image, this.image.name);
-    formData.append("user", JSON.stringify(this.form.value));
+    if (this.image != '')
+      formData.append('photo', this.imageFile, this.imageFile.name);
+    formData.append('user', JSON.stringify(this.form.value));
 
-    this.userService.postFormDataUser(formData).subscribe(data => {
-      this.router.navigate(["user"]);
-    })
+    this.userService.postFormDataUser(formData).subscribe(() => {
+      this.router.navigate(['user']);
+    });
   }
 
 
@@ -79,8 +81,8 @@ export class AddUserComponent implements OnInit {
 
     let form = this.form.value;
     form.photo = this.image;
-    this.userService.postFormJsonUser(form).subscribe(data => {
-      this.router.navigate(["user"]);
+    this.userService.postFormJsonUser(form).subscribe(() => {
+      this.router.navigate(['user']);
     });
   }
 

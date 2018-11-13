@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormGroup} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../service/user-service";
-import {FormUser} from "../add-user/form-user";
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../service/user-service';
+import {FormUser} from '../add-user/form-user';
 
 @Component({
   selector: 'app-edit-user',
@@ -12,8 +12,8 @@ import {FormUser} from "../add-user/form-user";
 export class EditUserComponent implements OnInit {
 
   form: FormGroup;
-  image: any = "";
-  teams = ["php", "java"];
+  image: any = '';
+  teams = ['php', 'java'];
   user: any;
 
   constructor(private formUser: FormUser,
@@ -31,8 +31,8 @@ export class EditUserComponent implements OnInit {
 
             this.user = data;
             this.form = this.formUser.getFormUser(this.user);
-            for(let i=0;i<this.user.contacts.length;i++){
-              this.contacts.push(this.formUser.getformContact(this.user.contacts[i]))
+            for (let i = 0; i < this.user.contacts.length; i++) {
+              this.contacts.push(this.formUser.getformContact(this.user.contacts[i]));
             }
 
           });
@@ -43,9 +43,8 @@ export class EditUserComponent implements OnInit {
   }
 
   get contacts(): FormArray {
-    return <FormArray> this.form.get("contacts");
+    return <FormArray> this.form.get('contacts');
   }
-
 
 
   readData(input: any) {
@@ -61,7 +60,6 @@ export class EditUserComponent implements OnInit {
 
   isValidContactField(name, i) {
 
-    console.log(name);
     let field = (<FormArray>this.form.get('contacts')).at(i).get(name);
     return ((field.touched ||
       field.dirty) &&
@@ -76,12 +74,12 @@ export class EditUserComponent implements OnInit {
 
 
   public addContact() {
-      //if(this.form.get('contacts').valid)
-      (<FormArray>this.form.get('contacts')).push(this.formUser.getformContact())
-    }
+    //if(this.form.get('contacts').valid)
+    (<FormArray>this.form.get('contacts')).push(this.formUser.getformContact());
+  }
 
   public removeContact(i) {
-    (<FormArray>this.form.get('contacts')).removeAt(i)
+    (<FormArray>this.form.get('contacts')).removeAt(i);
   }
 
 
@@ -89,8 +87,8 @@ export class EditUserComponent implements OnInit {
 
     let form = this.form.value;
     form.photo = this.image;
-    this.userService.postFormJsonUser(form).subscribe(data => {
-      this.router.navigate(["user"]);
+    this.userService.postFormJsonUser(form).subscribe(() => {
+      this.router.navigate(['user']);
     });
   }
 
